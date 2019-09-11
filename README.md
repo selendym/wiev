@@ -9,7 +9,7 @@
 - **wiev** is _minimal_. The GUI consists of only the rendered image and nothing else.
 - **wiev** is _simple_. The current codebase is only about 1k SLOC in size and depends only on ImageMagick and SFML.
 - **wiev** is _written in Rust_. Code modifications can be made without the fear of breaking something unexpectedly.
-- **wiev** is _a work in progress_. Expect rough corners.
+- **wiev** is _a work in progress_. Expect rough edges.
 
 
 ## Overview
