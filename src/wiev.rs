@@ -36,7 +36,7 @@ use std::collections as sc;
 
 const BACKGROUND_COLOR: sg::Color = sg::Color::BLACK;
 
-const TEXTURE_CACHE_MAX_BYTE_SIZE: usize = 1 << 29;  // 512 MiB
+const TEXTURE_CACHE_MAX_BYTE_SIZE: usize = 1 << 28;  // 256 MiB
 
 const COLORSPACE: mb::ColorspaceType = mb::ColorspaceType_sRGBColorspace;
 const DOWNSCALE_FILTER: m::FilterType = mb::FilterType_LanczosFilter;
@@ -258,6 +258,8 @@ impl Wiever
             self.image_state_map.insert( self.image_index, image_state );
         }
 
+        let image_index = self.image_index;
+        self.texture_cache_que.retain( | &key_ | { key_ != image_index } );
         let texture_opt = self.texture_cache_map.remove( &self.image_index );
         let mut texture =
                 if !self.texture_cache_bypass_flag && texture_opt.is_some() {
@@ -461,6 +463,12 @@ impl Wiever
         self.cursor_visible_flag = !self.cursor_visible_flag;
     }
 
+    pub fn clear_texture_cache( &mut self )
+    {
+        self.texture_cache_que.clear();
+        self.texture_cache_map.clear();
+    }
+
 // PUBLIC WIEV METHODS
     pub fn default_( &mut self )
     {
@@ -563,7 +571,7 @@ impl Wiever
         let history_que = &self.history_que;
         // let history_mode_flag = self.history_mode_flag;
         // let texture_cache_key = self.texture_cache_key;
-        // let texture_cache_que = &self.texture_cache_que;
+        let texture_cache_que = &self.texture_cache_que;
         let texture_cache_size = self.get_current_texture_cache_byte_size();
         let texture_smooth_flag = self.texture_smooth_flag;
         let texture_mipmap_flag = self.texture_mipmap_flag;
@@ -591,7 +599,7 @@ impl Wiever
         self.text_str.push_str( &expr_str_ln!( history_que ) );
         // self.text_str.push_str( &expr_str_ln!( history_mode_flag ) );
         // self.text_str.push_str( &expr_str_ln!( texture_cache_key ) );
-        // self.text_str.push_str( &expr_str_ln!( texture_cache_que ) );
+        self.text_str.push_str( &expr_str_ln!( texture_cache_que ) );
         self.text_str.push_str( &expr_str_ln!( texture_cache_size ) );
         self.text_str.push_str( &expr_str_ln!( texture_smooth_flag ) );
         self.text_str.push_str( &expr_str_ln!( texture_mipmap_flag ) );

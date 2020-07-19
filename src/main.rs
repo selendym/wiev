@@ -123,7 +123,7 @@ fn handle_event(
     use ROTATE_FAST as RF;
 
     match event {
-        key!( Escape ) | sw::Event::Closed => { wiever.close( window ); },
+        key!( Escape, a ) | sw::Event::Closed => { wiever.close( window ); },
 
         key!( PageUp )         => { wiever.change_image_index( wIO( -1 ) ); },
         key!( PageDown )       => { wiever.change_image_index( wIO(  1 ) ); },
@@ -168,6 +168,7 @@ fn handle_event(
         // key!( S, s ) => { wiever.toggle_texture_srgb(); },
         key!( T )    => { wiever.toggle_text_visible(); },
         key!( C )    => { wiever.toggle_cursor_visible(); },
+        key!( C, c ) => { wiever.clear_texture_cache(); },
 
         key!( Return )    => { wiever.default_(); },
         key!( Return, c ) => { wiever.fit_min_dim(); },
