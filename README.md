@@ -65,7 +65,7 @@ const FONT_OUTLINE_THICKNESS: f32 = 2.;
 ```rust
 const BACKGROUND_COLOR: sg::Color = sg::Color::BLACK;
 
-const TEXTURE_CACHE_MAX_BYTE_SIZE: usize = 1 << 29;  // 512 MiB
+const TEXTURE_CACHE_MAX_BYTE_SIZE: usize = 1 << 28;  // 256 MiB
 
 const COLORSPACE: mb::ColorspaceType = mb::ColorspaceType_sRGBColorspace;
 const DOWNSCALE_FILTER: m::FilterType = mb::FilterType_LanczosFilter;
@@ -79,7 +79,7 @@ const UPSCALE_FILTER:   m::FilterType = mb::FilterType_MitchellFilter;
 
 Below is an excerpt from the source showing the keybindings:
 ```rust
-key!( Escape ) | sw::Event::Closed => { wiever.close( window ); },
+key!( Escape, a ) | sw::Event::Closed => { wiever.close( window ); },
 
 key!( PageUp )         => { wiever.change_image_index( wIO( -1 ) ); },
 key!( PageDown )       => { wiever.change_image_index( wIO(  1 ) ); },
@@ -124,6 +124,7 @@ key!( S, c ) => { wiever.toggle_texture_mipmap(); },
 // key!( S, s ) => { wiever.toggle_texture_srgb(); },
 key!( T )    => { wiever.toggle_text_visible(); },
 key!( C )    => { wiever.toggle_cursor_visible(); },
+key!( C, c ) => { wiever.clear_texture_cache(); },
 
 key!( Return )    => { wiever.default_(); },
 key!( Return, c ) => { wiever.fit_min_dim(); },
@@ -160,7 +161,7 @@ key!( Dash, s ) => { wiever.vflip(); },
 
 ## Installation
 
-Install [nightly Rust] and compile with:
+Install [stable/nightly Rust] and compile with:
 - `cargo build --release`
 
 The compiled executable will be in `wiev/target/release/wiev`.
@@ -179,7 +180,7 @@ For example:
 
 
 [Rust]: https://www.rust-lang.org/
-[nightly Rust]: https://doc.rust-lang.org/nightly/edition-guide/rust-2018/rustup-for-managing-rust-versions.html
+[stable/nightly Rust]: https://doc.rust-lang.org/nightly/edition-guide/rust-2018/rustup-for-managing-rust-versions.html
 
 [ImageMagick]: https://imagemagick.org/index.php
 [Lanczos]: https://www.imagemagick.org/Usage/filter/#lanczos
